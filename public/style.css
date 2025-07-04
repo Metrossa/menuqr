@@ -1,0 +1,214 @@
+/* Notion-Inspired Ultra-Minimalist Black & White UI */
+
+:root {
+  --color-bg: #fff;
+  --color-text: #111;
+  --color-text-secondary: #666;
+  --color-border: #e5e5e5;
+  --color-block-bg: #fff;
+  --color-block-border: #e5e5e5;
+  --font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-size-base: 16px;
+  --font-size-lg: 2.2rem;
+  --font-size-md: 1.25rem;
+  --font-size-sm: 1rem;
+  --radius: 8px;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.hero {
+  text-align: left;
+  margin-bottom: var(--space-lg);
+}
+.hero-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-xs);
+}
+.hero-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-weight: 400;
+  margin-bottom: var(--space-md);
+}
+.hero-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--color-border);
+  margin: var(--space-xs) 0 var(--space-md) 0;
+  border-radius: 1px;
+}
+
+.category-nav {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+.category-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.category-btn.active, .category-btn:focus {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+.category-btn i {
+  font-size: 1em;
+  color: var(--color-text-secondary);
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.menu-item {
+  background: var(--color-block-bg);
+  border: 1px solid var(--color-block-border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  box-shadow: none;
+  transition: border 0.15s;
+}
+.menu-item:hover {
+  border: 1.5px solid #bbb;
+}
+.item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+.item-header h2 {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+.temperature-indicator {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: 1em;
+  border: 1px solid var(--color-border);
+}
+.item-description {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-xs);
+}
+.item-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+.price {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: none;
+  border-radius: var(--radius);
+  padding: 0 var(--space-xs);
+  border: none;
+}
+.dietary-badges {
+  display: flex;
+  gap: var(--space-xs);
+}
+.dietary-badge {
+  font-size: 0.75em;
+  color: var(--color-text-secondary);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.1em 0.6em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.menu-footer {
+  text-align: left;
+  color: var(--color-text-secondary);
+  font-size: 0.95em;
+  margin-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+}
+.menu-footer i {
+  color: var(--color-text-secondary);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-lg) 0;
+  color: var(--color-text-secondary);
+}
+.empty-content i {
+  font-size: 2.5rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+/* Remove all shadows, gradients, and unnecessary borders */
+.scroll-to-top {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: var(--space-md) var(--space-xs);
+  }
+  .menu-item {
+    padding: var(--space-sm);
+  }
+}
+
+/* Accessibility */
+button:focus, input:focus, select:focus {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brew & Bean - Admin Panel for managing coffee shop menu">
+    <meta name="theme-color" content="#8B4513">
+    
+    <title>Admin - Brew & Bean Menu Management</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header role="banner">
+            <h1>Manage Menu</h1>
+            <a href="/logout" class="logout-btn" aria-label="Logout from admin panel">Logout</a>
+        </header>
+
+        <main role="main">
+            <section class="menu-container" aria-label="Current menu items">
+                <% menu.forEach(item => { %>
+                    <article class="menu-item" data-category="<%= item.category || 'food' %>">
+                        <div class="item-header">
+                            <h2><%= item.name %></h2>
+                            <% if (item.temperature) { %>
+                                <div class="temperature-indicator <%= item.temperature %>" aria-label="<%= item.temperature %> drink">
+                                    <i class="fas fa-<%= item.temperature === 'hot' ? 'thermometer-half' : 'thermometer-empty' %>" aria-hidden="true"></i>
+                                </div>
+                            <% } %>
+                        </div>
+                        <p class="item-description"><%= item.description %></p>
+                        <div class="item-footer">
+                            <p class="price" aria-label="Price: $<%= item.price.toFixed(2) %>">$<%= item.price.toFixed(2) %></p>
+                            <% if (item.dietary) { %>
+                                <div class="dietary-badges" aria-label="Dietary information">
+                                    <% item.dietary.forEach(diet => { %>
+                                        <span class="dietary-badge <%= diet.toLowerCase() %>" aria-label="<%= diet %>"><%= diet %></span>
+                                    <% }); %>
+                                </div>
+                            <% } %>
+                        </div>
+                        <p class="item-category">Category: <%= item.category || 'food' %></p>
+                        <form action="/admin/delete/<%= item.id %>" method="POST" style="display:inline;">
+                            <button type="submit" aria-label="Delete <%= item.name %>">Delete</button>
+                        </form>
+                    </article>
+                <% }); %>
+            </section>
+
+            <section class="add-item-form" aria-label="Add new menu item">
+                <h2>Add New Item</h2>
+                <form action="/admin/add" method="POST">
+                    <label for="item-name" class="sr-only">Item Name</label>
+                    <input type="text" id="item-name" name="name" placeholder="Name" required>
+                    
+                    <label for="item-description" class="sr-only">Item Description</label>
+                    <input type="text" id="item-description" name="description" placeholder="Description" required>
+                    
+                    <label for="item-price" class="sr-only">Item Price</label>
+                    <input type="number" id="item-price" name="price" step="0.01" placeholder="Price" required>
+                    
+                    <label for="item-category" class="sr-only">Item Category</label>
+                    <select id="item-category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="hot">Hot Drinks</option>
+                        <option value="cold">Cold Drinks</option>
+                        <option value="food">Food & Pastries</option>
+                    </select>
+                    
+                    <label for="item-temperature" class="sr-only">Item Temperature</label>
+                    <select id="item-temperature" name="temperature">
+                        <option value="">No Temperature</option>
+                        <option value="hot">Hot</option>
+                        <option value="cold">Cold</option>
+                    </select>
+                    
+                    <label for="item-dietary" class="sr-only">Dietary Information</label>
+                    <input type="text" id="item-dietary" name="dietary" placeholder="Dietary (e.g., vegan,gluten-free,dairy-free)">
+                    
+                    <button type="submit">Add Item</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <style>
+        /* Screen reader only class */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</body>
+</html>
