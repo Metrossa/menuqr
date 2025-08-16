@@ -38,11 +38,6 @@ A modern, minimalist QR code menu application for coffee shops. Built with Node.
    - Admin Panel: `http://localhost:3000/admin`
    - Login: `http://localhost:3000/login`
 
-## 🔧 Admin Access
-
-- **Username**: `test`
-- **Password**: `test123`
-
 ## 📱 QR Code Usage
 
 1. Generate a QR code pointing to your server URL
