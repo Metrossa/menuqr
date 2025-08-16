@@ -55,12 +55,13 @@
         }
         
         .menu-block {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            padding: 1.75rem 0;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 1.5rem 0;
             border-bottom: 1px solid #eee;
             position: relative;
+            gap: 2rem;
         }
         
         .menu-block:last-child {
@@ -69,41 +70,37 @@
         
         /* Item Information */
         .item-info {
-            flex: 1;
-            min-width: 0;
-            padding-right: 2rem;
+            display: flex;
+            flex-direction: column;
         }
         
         .item-name {
             font-size: 1.25rem;
             font-weight: 700;
             color: #111;
-            margin-bottom: 0.3em;
+            margin-bottom: 0.2em;
             letter-spacing: -0.01em;
             line-height: 1.3;
         }
         
-        .item-desc {
-            font-size: 1rem;
+        .item-name-arabic {
+            font-family: 'Cairo', 'Noto Naskh Arabic', 'Tajawal', Arial, sans-serif;
+            font-size: 1.1rem;
             color: #666;
-            line-height: 1.6;
-            margin-bottom: 0.2em;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.4;
+            text-align: right;
         }
         
-        /* Price with Leader Line */
+        /* Price Container */
         .price-container {
             display: flex;
-            align-items: baseline;
-            gap: 1rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-width: 80px;
-            justify-content: flex-end;
-        }
-        
-        .leader-line {
-            flex: 1;
-            border-bottom: 1px dotted #ccc;
-            margin: 0 0.5rem;
-            min-width: 20px;
+            gap: 0.2rem;
         }
         
         .item-price {
@@ -112,6 +109,28 @@
             color: #111;
             font-family: 'Inter', sans-serif;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .sar-icon {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+        
+        .item-calories {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+        }
+        
+        .item-allergens {
+            font-size: 0.75rem;
+            color: #d32f2f;
+            font-weight: 500;
+            text-align: center;
         }
         
         /* Brand Header */
@@ -120,6 +139,17 @@
             margin-bottom: 3rem;
             padding-bottom: 2rem;
             border-bottom: 1px solid #eee;
+        }
+        
+        .logo-container {
+            margin-bottom: 1rem;
+        }
+        
+        .brand-logo {
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
         }
         
         .brand-title {
@@ -166,22 +196,33 @@
         /* Responsive Design */
         @media (max-width: 600px) {
             .menu-block {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: center;
             }
             
             .item-info {
-                padding-right: 0;
+                text-align: center !important;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .item-info[style*="text-align: right"] {
+                order: -1;
+                margin-bottom: 0.3rem;
+            }
+            
+            .item-info:not([style*="text-align: right"]) {
+                order: 0;
+            }
+            
+            .item-name-arabic {
+                text-align: center !important;
             }
             
             .price-container {
-                justify-content: flex-start;
-                width: 100%;
-            }
-            
-            .leader-line {
-                display: none;
+                order: 1;
+                margin: 0.5rem 0;
             }
             
             .brand-title {
@@ -202,128 +243,164 @@
     <div class="container">
         <!-- Brand Header -->
         <header class="brand-header" role="banner">
-            <h1 class="brand-title">TRSK</h1>
-            <div class="brand-subtitle">ترسك</div>
+            <div class="logo-container">
+                <img src="/images/logo.png" alt="TRSK Logo" class="brand-logo">
+            </div>
             <div class="brand-tagline">Boutique Coffee & Culture</div>
         </header>
 
-        <!-- Espresso Section -->
+        <!-- Hot Drinks Section -->
+        <% const hotDrinks = menu.filter(item => item.category === 'hot'); %>
+        <% if (hotDrinks.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
                 <span class="section-icon">☕</span>
-                <h2 class="section-title">Espresso</h2>
+                <h2 class="section-title">Hot Drinks</h2>
             </div>
             <div class="menu-blocks">
+                <% hotDrinks.forEach(item => { %>
                 <div class="menu-block">
                     <div class="item-info">
-                        <div class="item-name">Espresso</div>
-                        <div class="ar">إسبريسو</div>
-                        <div class="item-desc">Classic single shot, rich and bold.</div>
-                        <div class="ar">قهوة إسبريسو مركزة وغنية</div>
+                        <div class="item-name"><%= item.name %></div>
                     </div>
                     <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">12</span>
+                        <span class="item-price">
+                            <img src="/images/sar.png" alt="SAR" class="sar-icon">
+                            <%= item.price.toFixed(2) %>
+                        </span>
+                        <div class="item-calories"><%= item.calories %> Cal</div>
+                    </div>
+                    <div class="item-info" style="text-align: right;">
+                        <div class="item-name-arabic"><%= item.arabic_name %></div>
                     </div>
                 </div>
-                
-                <div class="menu-block">
-                    <div class="item-info">
-                        <div class="item-name">Americano</div>
-                        <div class="ar">أمريكانو</div>
-                        <div class="item-desc">Espresso with hot water.</div>
-                        <div class="ar">إسبريسو مع ماء ساخن</div>
-                    </div>
-                    <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">14</span>
-                    </div>
-                </div>
-                
-                <div class="menu-block">
-                    <div class="item-info">
-                        <div class="item-name">Cortado</div>
-                        <div class="ar">كورتادو</div>
-                        <div class="item-desc">Espresso cut with a dash of milk.</div>
-                        <div class="ar">إسبريسو مع قليل من الحليب</div>
-                    </div>
-                    <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">15</span>
-                    </div>
-                </div>
+                <% }); %>
             </div>
         </section>
-
-        <!-- Signature Section -->
-        <section class="menu-section">
-            <div class="section-header">
-                <span class="section-icon">✨</span>
-                <h2 class="section-title">Signature</h2>
-            </div>
-            <div class="menu-blocks">
-                <div class="menu-block">
-                    <div class="item-info">
-                        <div class="item-name">Spanish Latte</div>
-                        <div class="ar">سبانيش لاتيه</div>
-                        <div class="item-desc">Espresso, milk, and a touch of sweetness.</div>
-                        <div class="ar">إسبريسو مع الحليب والمحلى</div>
-                    </div>
-                    <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">18</span>
-                    </div>
-                </div>
-                
-                <div class="menu-block">
-                    <div class="item-info">
-                        <div class="item-name">Pistachio Latte</div>
-                        <div class="ar">فستق لاتيه</div>
-                        <div class="item-desc">Creamy latte with pistachio flavor.</div>
-                        <div class="ar">لاتيه بنكهة الفستق</div>
-                    </div>
-                    <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">20</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <% } %>
 
         <!-- Cold Drinks Section -->
+        <% const coldDrinks = menu.filter(item => item.category === 'cold'); %>
+        <% if (coldDrinks.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
                 <span class="section-icon">🧊</span>
                 <h2 class="section-title">Cold Drinks</h2>
             </div>
             <div class="menu-blocks">
+                <% coldDrinks.forEach(item => { %>
                 <div class="menu-block">
                     <div class="item-info">
-                        <div class="item-name">Iced Americano</div>
-                        <div class="ar">أمريكانو بارد</div>
-                        <div class="item-desc">Chilled espresso and water.</div>
-                        <div class="ar">إسبريسو مع ماء بارد</div>
+                        <div class="item-name"><%= item.name %></div>
                     </div>
                     <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">15</span>
+                        <span class="item-price">
+                            <img src="/images/sar.png" alt="SAR" class="sar-icon">
+                            <%= item.price.toFixed(2) %>
+                        </span>
+                        <div class="item-calories"><%= item.calories %> Cal</div>
+                    </div>
+                    <div class="item-info" style="text-align: right;">
+                        <div class="item-name-arabic"><%= item.arabic_name %></div>
                     </div>
                 </div>
-                
-                <div class="menu-block">
-                    <div class="item-info">
-                        <div class="item-name">Cold Brew</div>
-                        <div class="ar">كولد برو</div>
-                        <div class="item-desc">Slow-brewed, smooth and refreshing.</div>
-                        <div class="ar">قهوة باردة مخمرة ببطء</div>
-                    </div>
-                    <div class="price-container">
-                        <span class="leader-line"></span>
-                        <span class="item-price">17</span>
-                    </div>
-                </div>
+                <% }); %>
             </div>
         </section>
+        <% } %>
+
+        <!-- Black Coffee Section -->
+        <% const blackCoffee = menu.filter(item => item.category === 'black'); %>
+        <% if (blackCoffee.length > 0) { %>
+        <section class="menu-section">
+            <div class="section-header">
+                <span class="section-icon">⚫</span>
+                <h2 class="section-title">Black Coffee</h2>
+            </div>
+            <div class="menu-blocks">
+                <% blackCoffee.forEach(item => { %>
+                <div class="menu-block">
+                    <div class="item-info">
+                        <div class="item-name"><%= item.name %></div>
+                    </div>
+                    <div class="price-container">
+                        <span class="item-price">
+                            <img src="/images/sar.png" alt="SAR" class="sar-icon">
+                            <%= item.price.toFixed(2) %>
+                        </span>
+                        <div class="item-calories"><%= item.calories %> Cal</div>
+                    </div>
+                    <div class="item-info" style="text-align: right;">
+                        <div class="item-name-arabic"><%= item.arabic_name %></div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+        <% } %>
+
+        <!-- Desserts Section -->
+        <% const desserts = menu.filter(item => item.category === 'dessert'); %>
+        <% if (desserts.length > 0) { %>
+        <section class="menu-section">
+            <div class="section-header">
+                <span class="section-icon">🍰</span>
+                <h2 class="section-title">Desserts</h2>
+            </div>
+            <div class="menu-blocks">
+                <% desserts.forEach(item => { %>
+                <div class="menu-block">
+                    <div class="item-info">
+                        <div class="item-name"><%= item.name %></div>
+                    </div>
+                    <div class="price-container">
+                        <span class="item-price">
+                            <img src="/images/sar.png" alt="SAR" class="sar-icon">
+                            <%= item.price.toFixed(2) %>
+                        </span>
+                        <div class="item-calories"><%= item.calories %> Cal</div>
+                        <% if (item.allergens) { %>
+                        <div class="item-allergens"><%= item.allergens %></div>
+                        <% } %>
+                    </div>
+                    <div class="item-info" style="text-align: right;">
+                        <div class="item-name-arabic"><%= item.arabic_name %></div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+        <% } %>
+
+        <!-- Beverages Section -->
+        <% const beverages = menu.filter(item => item.category === 'beverages'); %>
+        <% if (beverages.length > 0) { %>
+        <section class="menu-section">
+            <div class="section-header">
+                <span class="section-icon">💧</span>
+                <h2 class="section-title">Beverages</h2>
+            </div>
+            <div class="menu-blocks">
+                <% beverages.forEach(item => { %>
+                <div class="menu-block">
+                    <div class="item-info">
+                        <div class="item-name"><%= item.name %></div>
+                    </div>
+                    <div class="price-container">
+                        <span class="item-price">
+                            <img src="/images/sar.png" alt="SAR" class="sar-icon">
+                            <%= item.price.toFixed(2) %>
+                        </span>
+                        <div class="item-calories"><%= item.calories %> Cal</div>
+                    </div>
+                    <div class="item-info" style="text-align: right;">
+                        <div class="item-name-arabic"><%= item.arabic_name %></div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+        <% } %>
 
         <!-- Footer -->
         <footer class="menu-footer" role="contentinfo">

@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const { db, initializeDB } = require('./database');
+const { db, initializeDB, query, run } = require('./database');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +15,11 @@ app.use(session({
     cookie: { secure: process.env.NODE_ENV === 'production' } // Set to true if using HTTPS
 }));
 
-initializeDB();
+// Initialize database
+initializeDB().catch(err => {
+    console.error('Failed to initialize database:', err);
+    process.exit(1);
+});
 
 // Middleware to check if the user is authenticated
 const isAuthenticated = (req, res, next) => {
@@ -29,7 +33,7 @@ const isAuthenticated = (req, res, next) => {
 // Customer-facing menu
 app.get('/', async (req, res) => {
     try {
-        const result = await db.query("SELECT * FROM menu");
+        const result = await query("SELECT * FROM menu");
         const menu = result.rows.map(item => ({
             ...item,
             dietary: item.dietary ? item.dietary.split(',') : null
@@ -73,7 +77,7 @@ app.get('/logout', (req, res) => {
 // Admin Panel
 app.get('/admin', isAuthenticated, async (req, res) => {
     try {
-        const result = await db.query("SELECT * FROM menu");
+        const result = await query("SELECT * FROM menu");
         const menu = result.rows.map(item => ({
             ...item,
             dietary: item.dietary ? item.dietary.split(',') : null
@@ -87,9 +91,10 @@ app.get('/admin', isAuthenticated, async (req, res) => {
 
 // Add item (from admin panel)
 app.post('/admin/add', isAuthenticated, async (req, res) => {
-    const { name, description, price, category, temperature, dietary } = req.body;
+    const { name, arabic_name, description, price, category, temperature, calories, allergens } = req.body;
     try {
-        await db.query("INSERT INTO menu (name, description, price, category, temperature, dietary) VALUES ($1, $2, $3, $4, $5, $6)", [name, description, price, category, temperature, dietary]);
+        await run("INSERT INTO menu (name, arabic_name, description, price, category, temperature, calories, allergens) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
+            [name, arabic_name, description, price, category, temperature, parseInt(calories) || 0, allergens || null]);
         res.redirect('/admin');
     } catch (err) {
         console.error('Error adding menu item:', err);
@@ -101,7 +106,7 @@ app.post('/admin/add', isAuthenticated, async (req, res) => {
 app.post('/admin/delete/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
-        await db.query("DELETE FROM menu WHERE id = $1", [id]);
+        await run("DELETE FROM menu WHERE id = ?", [id]);
         res.redirect('/admin');
     } catch (err) {
         console.error('Error deleting menu item:', err);
