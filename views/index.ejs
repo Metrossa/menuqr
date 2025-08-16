@@ -28,7 +28,7 @@
         .section-header {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: space-between;
             margin-bottom: 2rem;
             padding-bottom: 0.75rem;
             border-bottom: 2px solid #111;
@@ -47,13 +47,20 @@
             margin: 0;
         }
         
+        .section-title-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
         .section-title-arabic {
             font-family: 'Cairo', 'Noto Naskh Arabic', 'Tajawal', Arial, sans-serif;
             font-size: 1.4rem;
             font-weight: 600;
             color: #666;
-            margin-left: 0.75rem;
             letter-spacing: 0;
+            text-align: right;
+            direction: rtl;
         }
         
         /* Menu Blocks with Dividers */
@@ -263,8 +270,11 @@
         <% if (hotDrinks.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
-                <span class="section-icon">☕</span>
-                <h2 class="section-title">Hot Drinks <span class="section-title-arabic">مشروبات حارة</span></h2>
+                <div class="section-title-left">
+                    <span class="section-icon">☕</span>
+                    <h2 class="section-title">Hot Drinks</h2>
+                </div>
+                <h2 class="section-title-arabic">مشروبات حارة</h2>
             </div>
             <div class="menu-blocks">
                 <% hotDrinks.forEach(item => { %>
@@ -293,8 +303,11 @@
         <% if (coldDrinks.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
-                <span class="section-icon">🧊</span>
-                <h2 class="section-title">Cold Drinks <span class="section-title-arabic">مشروبات باردة</span></h2>
+                <div class="section-title-left">
+                    <span class="section-icon">🧊</span>
+                    <h2 class="section-title">Cold Drinks</h2>
+                </div>
+                <h2 class="section-title-arabic">مشروبات باردة</h2>
             </div>
             <div class="menu-blocks">
                 <% coldDrinks.forEach(item => { %>
@@ -323,8 +336,11 @@
         <% if (blackCoffee.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
-                <span class="section-icon">⚫</span>
-                <h2 class="section-title">Black Coffee <span class="section-title-arabic">قهوة سوداء</span></h2>
+                <div class="section-title-left">
+                    <span class="section-icon">⚫</span>
+                    <h2 class="section-title">Black Coffee</h2>
+                </div>
+                <h2 class="section-title-arabic">قهوة سوداء</h2>
             </div>
             <div class="menu-blocks">
                 <% blackCoffee.forEach(item => { %>
@@ -353,8 +369,11 @@
         <% if (desserts.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
-                <span class="section-icon">🍰</span>
-                <h2 class="section-title">Desserts <span class="section-title-arabic">حلويات</span></h2>
+                <div class="section-title-left">
+                    <span class="section-icon">🍰</span>
+                    <h2 class="section-title">Desserts</h2>
+                </div>
+                <h2 class="section-title-arabic">حلويات</h2>
             </div>
             <div class="menu-blocks">
                 <% desserts.forEach(item => { %>
@@ -386,8 +405,11 @@
         <% if (beverages.length > 0) { %>
         <section class="menu-section">
             <div class="section-header">
-                <span class="section-icon">💧</span>
-                <h2 class="section-title">Beverages <span class="section-title-arabic">مشروبات</span></h2>
+                <div class="section-title-left">
+                    <span class="section-icon">💧</span>
+                    <h2 class="section-title">Beverages</h2>
+                </div>
+                <h2 class="section-title-arabic">مشروبات</h2>
             </div>
             <div class="menu-blocks">
                 <% beverages.forEach(item => { %>
