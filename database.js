@@ -70,8 +70,8 @@ const initializeDB = async () => {
                         // Black Coffee
                         ['Coffee of the Day: Hot', 'قهوة اليوم: ساخنة', 'Today\'s special hot coffee', 8.00, 'black', 'hot', null, 8, null],
                         ['Coffee of the Day: Iced', 'قهوة اليوم: باردة', 'Today\'s special iced coffee', 8.00, 'black', 'cold', null, 8, null],
-                        ['V60 - Hot', 'في 60 - ساخن', 'Pour-over coffee brewed with V60 method', 16.00, 'black', 'hot', null, 8, null],
-                        ['V60 - Iced', 'في 60 - بارد', 'Cold brew using V60 method', 16.00, 'black', 'cold', null, 8, null],
+                        ['V60 - Hot', 'مقطرة حار', 'Pour-over coffee brewed with V60 method', 16.00, 'black', 'hot', null, 8, null],
+                        ['V60 - Iced', 'مقطرة بارد', 'Cold brew using V60 method', 16.00, 'black', 'cold', null, 8, null],
                         ['Americano', 'أمريكانو', 'Espresso with hot water', 12.00, 'black', 'hot', null, 11, null],
                         ['Iced Americano', 'أمريكانو بارد', 'Espresso with cold water over ice', 12.00, 'black', 'cold', null, 11, null],
                         
