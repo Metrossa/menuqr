@@ -1,11 +1,11 @@
 /* Notion-Inspired Ultra-Minimalist Black & White UI */
 
 :root {
-  --color-bg: #fff;
+  --color-bg: #f4ecc5;
   --color-text: #111;
   --color-text-secondary: #666;
   --color-border: #e5e5e5;
-  --color-block-bg: #fff;
+  --color-block-bg: #f4ecc5;
   --color-block-border: #e5e5e5;
   --font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   --font-size-base: 16px;

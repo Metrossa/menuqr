@@ -109,6 +109,14 @@
             text-align: right;
         }
         
+        .item-description {
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 0.3em;
+            line-height: 1.3;
+        }
+        
         /* Price Container */
         .price-container {
             display: flex;
@@ -281,6 +289,9 @@
                 <div class="menu-block">
                     <div class="item-info">
                         <div class="item-name"><%= item.name %></div>
+                        <% if (item.description) { %>
+                        <div class="item-description"><%= item.description %></div>
+                        <% } %>
                     </div>
                     <div class="price-container">
                         <span class="item-price">
@@ -314,6 +325,9 @@
                 <div class="menu-block">
                     <div class="item-info">
                         <div class="item-name"><%= item.name %></div>
+                        <% if (item.description) { %>
+                        <div class="item-description"><%= item.description %></div>
+                        <% } %>
                     </div>
                     <div class="price-container">
                         <span class="item-price">
@@ -347,6 +361,9 @@
                 <div class="menu-block">
                     <div class="item-info">
                         <div class="item-name"><%= item.name %></div>
+                        <% if (item.description) { %>
+                        <div class="item-description"><%= item.description %></div>
+                        <% } %>
                     </div>
                     <div class="price-container">
                         <span class="item-price">
@@ -380,6 +397,9 @@
                 <div class="menu-block">
                     <div class="item-info">
                         <div class="item-name"><%= item.name %></div>
+                        <% if (item.description) { %>
+                        <div class="item-description"><%= item.description %></div>
+                        <% } %>
                     </div>
                     <div class="price-container">
                         <span class="item-price">
@@ -416,6 +436,9 @@
                 <div class="menu-block">
                     <div class="item-info">
                         <div class="item-name"><%= item.name %></div>
+                        <% if (item.description) { %>
+                        <div class="item-description"><%= item.description %></div>
+                        <% } %>
                     </div>
                     <div class="price-container">
                         <span class="item-price">
